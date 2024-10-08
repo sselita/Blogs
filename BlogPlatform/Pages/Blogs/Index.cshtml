@@ -1,0 +1,83 @@
+﻿@page
+@model BlogPlatroms.Pages.Posts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Blog Posts</h1>
+
+<form method="get">
+    <div class="form-group">
+        <label for="searchTitle">Search by Title:</label>
+        <input type="text" id="searchTitle" name="searchTitle" class="form-control" value="@Model.SearchTitle" />
+    </div>
+    <div class="form-group">
+        <label for="searchDate">Search by Date:</label>
+        <input type="date" id="searchDate" name="searchDate" class="form-control" value="@Model.SearchDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BlogPost[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BlogPost[0].Content)
+            </th>
+         
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BlogPost)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Content)</td>
+             
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page-handler="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (Model.BlogPost.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="Index" asp-route-pageNumber="@Model.BlogPost.PageNumber - 1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.BlogPost.PageCount; i++)
+            {
+                <li class="page-item @(i == Model.BlogPost.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-page-handler="Index" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+            @if (Model.BlogPost.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="Index" asp-route-pageNumber="@Model.BlogPost.PageNumber + 1" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
