@@ -42,12 +42,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//app.UsePathBase("/blog");
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=BlogPost}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

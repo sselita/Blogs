@@ -32,7 +32,7 @@ namespace BlogPlatroms.Pages.Posts
         [BindProperty(SupportsGet = true)]
         public int PageNumber { get; set; } = 1;  // Default to the first page
 
-        public int PageSize { get; set; } = 5;  // Display 5 posts per page
+        public int PageSize { get; set; } = 6;  // Display 5 posts per page
 
         public async Task OnGetAsync()
         {
